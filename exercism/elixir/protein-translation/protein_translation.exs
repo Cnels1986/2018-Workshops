@@ -23,12 +23,16 @@ defmodule ProteinTranslation do
   def of_rna(rna) do
     # divides string up every 3 characters
     codonList = for <<x::binary-3 <- rna>>, do: x
-    checkCodons(codonList)
+    {:ok, checkCodons(codonList)}
   end
 
   defp checkCodons([head | tail]) do
     x = Map.get(@codons, head)
-    [x | checkCodons(tail) ]
+    if x == "STOP" do
+      []
+    else
+      [x | checkCodons(tail) ]
+    end
   end
 
   # end of recusion
@@ -39,7 +43,7 @@ defmodule ProteinTranslation do
 
   @spec of_codon(String.t()) :: {atom, String.t()}
   def of_codon(codon) do
-    x = {:ok, Map.get(@codons, codon)}
+    {:ok, Map.get(@codons, codon)}
   end
 
 end
