@@ -5,17 +5,18 @@ defmodule Rumbl.Video do
     field :url, :string
     field :title, :string
     field :description, :string
-    belongs_to :user, Rumbl.User, foreign_key: :user_id
+    belongs_to :user, Rumbl.User
+    belongs_to :category, Rumbl.Category
 
     timestamps()
   end
 
 
-  @required_fields ~w(url title description) 
-  @optional_fields ~w()
-  def changeset(struct, params \\ %{}) do
-    struct
-    |> cast(params, [:url, :title, :description])
-    |> validate_required([:url, :title, :description])
+  @required_fields ~w(url title description)
+  @optional_fields ~w(category_id)
+  def changeset(model, params \\ :empty) do
+    model
+    |> cast(params, @required_fields, @optional_fields)
+    |> assoc_constraint(:category)
   end
 end
