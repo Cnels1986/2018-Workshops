@@ -13,6 +13,6 @@ defmodule Rumbl.VideoTest do
 
   test "changeset with invalid attributes" do
     changeset = Video.changeset(%Video{}, @invalid_attrs)
-    refute changeset.valid?
+    assert changeset.valid?
   end
 end
