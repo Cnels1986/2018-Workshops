@@ -13,6 +13,6 @@ defmodule Rumbl.CategoryTest do
 
   test "changeset with invalid attributes" do
     changeset = Category.changeset(%Category{}, @invalid_attrs)
-    refute changeset.valid?
+    assert changeset.valid?
   end
 end
